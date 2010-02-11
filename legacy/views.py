@@ -6,7 +6,7 @@ from legacy import transform_to
 def redirect_to(request, url, to_url=None, to_query=None, process=None,
                 rewrites=None, defaults=None, as_kwargs=False, resolver=None,
                 *view_args, **view_kwargs):
-    data = dict(request.GET.iteritems())
+    data = request.GET.copy()
     data.update(views_kwargs)
 
     try:

@@ -51,6 +51,14 @@ def transform_to(url, params=None, to_url=None, to_query=None, process=None,
     ...    resolver=format_resolver
     ... )
     '/event/1/3/'
+
+    Transforn with list in params
+    >>> transform_to(
+    ...    '/event/%s/', {'a': 1, 'b': [2, 3]},
+    ...    to_url=['a'], to_query=['b'],
+    ...    resolver=format_resolver
+    ... )
+    '/event/1/?b=2&b=3'
     """
     params = params or {}
     to_url = to_url or []
@@ -98,7 +106,15 @@ def transform_to(url, params=None, to_url=None, to_query=None, process=None,
     if not url:
         return
 
-    query = urlencode(dict([(key, params[key]) for key in to_query if key in params]))
+    params = dict([(key, not isinstance(value, list) and [value] or value)
+                for key, value in params.iteritems()])
+
+    query = urlencode(
+        [(key, value)
+                for key in to_query
+                    for value in params.get(key, [])]
+    )
+
     if query:
         query = '?' + query
 
