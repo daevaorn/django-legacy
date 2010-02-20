@@ -1,5 +1,8 @@
 from django.utils.http import urlencode
 
+class TransformError(Exception):
+    pass
+
 def reverse_resolver(url, *args, **kwargs):
     """Treats given url as url-pattern name and tries to revese it"""
     from django.core.urlresolvers import reverse, NoReverseMatch
@@ -98,8 +101,8 @@ def transform_to(url, params=None, to_url=None, to_query=None, process=None,
         else:
             args = [params[key] for key in to_url]
             kwargs = {}
-    except KeyError:
-        raise
+    except KeyError, e:
+        raise TransformError(e)
 
     url = resolver(url, *args, **kwargs)
 

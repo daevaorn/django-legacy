@@ -1,7 +1,7 @@
 from django import http
 from django.utils.http import urlencode
 
-from legacy import transform_to
+from legacy import transform_to, TransformError
 
 def redirect_to(request, url, to_url=None, to_query=None, process=None,
                 rewrites=None, defaults=None, as_kwargs=False, resolver=None,
@@ -13,7 +13,7 @@ def redirect_to(request, url, to_url=None, to_query=None, process=None,
         new_url = transform_to(
             url, data, to_url, to_query, process, rewrites, defaults, as_kwargs, resolver
         )
-    except Exception:
-        raise http.Http404("Cannot transform url")
+    except TransformError, e:
+        raise http.Http404("Cannot transform url: %s" % e)
 
     return http.HttpResponsePermanentRedirect(new_url)
