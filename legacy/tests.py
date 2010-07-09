@@ -16,7 +16,7 @@ __test__ = {'': r"""
     ... )
     '/event/12/'
 
-    Transforn with processing and rewrite
+    Transform with processing and rewrite
     >>> transform_to(
     ...    '/event/%s/%s/', {'a': 1, 'b': 2},
     ...    to_url=['a', 'c'], process={'c': lambda c: c + 1},rewrites={'b': 'c'},
@@ -24,7 +24,7 @@ __test__ = {'': r"""
     ... )
     '/event/1/3/'
 
-    Transforn with list in params
+    Transform with list in params
     >>> transform_to(
     ...    '/event/%s/', {'a': 1, 'b': [2, 3]},
     ...    to_url=['a'], to_query=['b'],
