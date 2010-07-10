@@ -7,7 +7,7 @@ def redirect_to(request, url, to_url=None, to_query=None, process=None,
                 rewrites=None, defaults=None, as_kwargs=False, resolver=None,
                 *view_args, **view_kwargs):
     data = request.GET.copy()
-    data.update(views_kwargs)
+    data.update(view_kwargs)
 
     try:
         new_url = transform_to(
