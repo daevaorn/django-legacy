@@ -11,7 +11,7 @@ def redirect_to(request, url, to_url=None, to_query=None, process=None,
 
     try:
         new_url = transform_to(
-            url, data, to_url, to_query, process, rewrites, defaults, as_kwargs, resolver
+            request, url, data, to_url, to_query, process, rewrites, defaults, as_kwargs, resolver
         )
     except TransformError, e:
         raise http.Http404("Cannot transform url: %s" % e)

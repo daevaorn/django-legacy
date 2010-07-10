@@ -25,7 +25,7 @@ def format_resolver(url, *args, **kwargs):
             pass
         return None
 
-def transform_to(url, params=None, to_url=None, to_query=None, process=None,
+def transform_to(request, url, params=None, to_url=None, to_query=None, process=None,
                  rewrites=None, defaults=None, as_kwargs=False, resolver=None):
     """Generates url with given template and params."""
     params = params or {}
@@ -51,7 +51,7 @@ def transform_to(url, params=None, to_url=None, to_query=None, process=None,
             keys = [keys]
 
         try:
-            res = func(*[params[key] for key in keys])
+            res = func(request, *[params[key] for key in keys])
             if isinstance(res, dict):
                 params.update(res)
             elif len(keys) == 1:
