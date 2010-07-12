@@ -40,12 +40,14 @@ def transform_to(request, url, params=None, to_url=None, to_query=None, process=
         if key not in params:
             params[key] = callable(default) and default(request) or default
 
+    # Rewrite arguments
     for key, new_name in rewrites.iteritems():
         try:
             params[new_name] = params.pop(key)
         except KeyError:
             pass
 
+    # Advanced arguments processing
     for keys, func in process.iteritems():
         if not isinstance(keys, (list, tuple)):
             keys = [keys]
@@ -59,6 +61,7 @@ def transform_to(request, url, params=None, to_url=None, to_query=None, process=
         except KeyError:
             pass
 
+    # Passing **kwargs or *args to resolver
     try:
         if as_kwargs:
             args = ()
