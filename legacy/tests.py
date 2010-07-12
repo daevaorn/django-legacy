@@ -11,7 +11,7 @@ __test__ = {'': r"""
     Transform with custom processing
     >>> transform_to(
     ...    '/event/%s/', {'a': 1, 'b': 2},
-    ...    to_url=['ab'], process={('a', 'b'): lambda a, b: {'ab': '%s%s' % (a, b)}},
+    ...    to_url=['ab'], process={('a', 'b'): lambda req, a, b: {'ab': '%s%s' % (a, b)}},
     ...    resolver=format_resolver
     ... )
     '/event/12/'
@@ -19,7 +19,7 @@ __test__ = {'': r"""
     Transform with processing and rewrite
     >>> transform_to(
     ...    '/event/%s/%s/', {'a': 1, 'b': 2},
-    ...    to_url=['a', 'c'], process={'c': lambda c: c + 1},rewrites={'b': 'c'},
+    ...    to_url=['a', 'c'], process={'c': lambda req, c: c + 1},rewrites={'b': 'c'},
     ...    resolver=format_resolver
     ... )
     '/event/1/3/'
