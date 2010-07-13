@@ -65,9 +65,13 @@ def transform_to(request, url, params=None, to_url=None, to_query=None, process=
     try:
         if as_kwargs:
             args = ()
-            kwargs = dict([(key, params[key]) for key in to_url])
+            kwargs = dict([(key, params[key])
+                               for key in to_url
+                                   if key in params])
         else:
-            args = [params[key] for key in to_url]
+            args = [params[key]
+                    for key in to_url
+                        if key in params]
             kwargs = {}
     except KeyError, e:
         raise TransformError(e)
