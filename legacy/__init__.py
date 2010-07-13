@@ -76,6 +76,10 @@ def transform_to(request, url, params=None, to_url=None, to_query=None, process=
     except KeyError, e:
         raise TransformError(e)
 
+    # In hard cases we can set 'url' and 'params' programmatically
+    if callable(url):
+        url, params = url(request, params)
+
     url = resolver(url, *args, **kwargs)
 
     if not url:
