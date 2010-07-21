@@ -83,7 +83,8 @@ def transform_to(request, url, params=None, to_url=None, to_query=None, process=
     url = resolver(url, *args, **kwargs)
 
     if not url:
-        return
+        raise TransformError("Can't resolve url: '%s', with args: %s, %s." %
+                             (url, args, kwargs))
 
     params = dict([(key, not isinstance(value, list) and [value] or value)
                 for key, value in params.iteritems()])
