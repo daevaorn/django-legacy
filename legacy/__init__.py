@@ -1,4 +1,6 @@
 from django.utils.http import urlencode
+from django import http
+
 
 class TransformError(Exception):
     pass
@@ -78,7 +80,12 @@ def transform_to(request, url, params=None, to_url=None, to_query=None, process=
 
     # In hard cases we can set 'url' and 'params' programmatically
     if callable(url):
-        url, params = url(request, params)
+        response = url(request, params)
+
+        if isinstance(response, http.HttpResponse):
+            return response
+
+        url, params = response
 
     url = resolver(url, *args, **kwargs)
 

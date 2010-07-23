@@ -10,10 +10,13 @@ def redirect_to(request, url, to_url=None, to_query=None, process=None,
     data.update(view_kwargs)
 
     try:
-        new_url = transform_to(
+        response = transform_to(
             request, url, data, to_url, to_query, process, rewrites, defaults, as_kwargs, resolver
         )
     except TransformError, e:
         raise http.Http404("Cannot transform url: %s" % e)
 
-    return http.HttpResponsePermanentRedirect(new_url)
+    if isinstance(response, http.HttpResponse):
+        return response
+
+    return http.HttpResponsePermanentRedirect(response)
