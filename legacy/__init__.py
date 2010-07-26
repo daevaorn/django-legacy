@@ -13,7 +13,7 @@ def reverse_resolver(url, *args, **kwargs):
     except NoReverseMatch:
         pass
 
-    return None
+    return None  # FIXME: maybe raise Exception
 
 def format_resolver(url, *args, **kwargs):
     """Processes given url as string with python format syntax"""
@@ -24,7 +24,7 @@ def format_resolver(url, *args, **kwargs):
             return url % kwargs
         except KeyError:
             pass
-        return None
+        return None  # FIXME: maybe raise Exception
 
 def transform_to(request, url, params=None, to_url=None, to_query=None, process=None,
                  rewrites=None, defaults=None, as_kwargs=False, resolver=None):
