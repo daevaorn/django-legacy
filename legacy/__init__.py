@@ -1,6 +1,7 @@
 from django import http
 from django.utils.http import urlencode
 
+
 class TransformError(Exception):
     pass
 
