@@ -16,4 +16,7 @@ def redirect_to(request, url, to_url=None, to_query=None, process=None,
     except TransformError, e:
         raise http.Http404("Cannot transform url: %s" % e)
 
+    if isinstance(new_url, http.HttpResponse):
+        return new_url
+
     return http.HttpResponsePermanentRedirect(new_url)
